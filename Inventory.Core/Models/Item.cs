@@ -16,8 +16,8 @@ namespace Inventory.Core
         public int Quality {
             get
             {
-                if (_quality < 0) { return 0; }
-                if (_quality > 50) { return 50; }
+                //if (_quality < 0) { return 0; }
+                //if (_quality > 50) { return 50; }
                 return _quality;
             }
             set

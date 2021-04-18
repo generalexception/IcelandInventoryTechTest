@@ -239,7 +239,7 @@ namespace Inventory.Test
             Assert.Equal(0, itemUnderTest.Quality);
         }
 
-
+        // Test case to handle Fresh Item that is also passed it's SellIn date
         [Fact]
         public void WhenDegredationFactorIsPositive_AndOnceSellByDateIsLessThanZero_ThenQualityDecreasesByDegredationFactorAndTwiceAsFast()
         {

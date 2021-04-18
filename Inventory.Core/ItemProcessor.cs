@@ -60,17 +60,22 @@ namespace Inventory.Core
         }
 
         /// <summary>
-        /// Reduces the quality of the item by 1, or 2 if past sell by date.
+        /// Decrements the quality of the item. If the items SellIn date is negative then quality decreases twofold.
         /// </summary>
-        /// <param name="item">The item to adjust the quality on.</param>
+        /// <param name="item">The item to decrease the quality on.</param>
+        /// <param name="value">How much to decrease it by.</param>
         private void DecrementQuality(IItem item, int value)
         {
             if (item.SellIn < 0)
-            {
                 item.Quality -= value * 2;
-                return;
-            }
-            item.Quality -= value;
+            else
+                item.Quality -= value;
+
+            if (item.Quality > 50)
+                item.Quality = 50;
+
+            if (item.Quality < 0)
+                item.Quality = 0;
         }
     }
 }
