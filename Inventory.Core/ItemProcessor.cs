@@ -6,6 +6,9 @@ namespace Inventory.Core
 {
     public class ItemProcessor : IItemProcessor
     {
+        /// <summary>
+        /// The items to process.
+        /// </summary>
         private readonly IList<Item> _itemsToProcess;
 
         public ItemProcessor(IList<Item> ItemsToProcess)
@@ -13,23 +16,22 @@ namespace Inventory.Core
             _itemsToProcess = ItemsToProcess;
         }
 
+        /// <summary>
+        /// Processes the items. If there are no degredations rules then the item is skipped.
+        /// </summary>
         public void ProcessItems()
         {
             foreach (var item in _itemsToProcess)
             {
                 if (item.DegredationRules.Count == 0)
-                {
                     continue;
-                }
 
-                else
-                {
-                    var rule = item.DegredationRules
-                        .OrderBy(rule => Math.Abs(item.SellIn - rule.SellInThreshold))
-                        .First();
+                // order the rules by the one closest to the threshold value
+                var rule = item.DegredationRules
+                    .OrderBy(rule => Math.Abs(item.SellIn - rule.SellInThreshold))
+                    .First();
 
-                    ApplyDegredationRule(item, rule);
-                }
+                ApplyDegredationRule(item, rule);
 
                 DecrementSellInValue(item);
             }
