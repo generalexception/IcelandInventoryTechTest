@@ -4,11 +4,6 @@ using System.Linq;
 
 namespace Inventory.Core
 {
-    public interface IItemProcessor
-    {
-        public void ProcessItems();
-    }
-
     public class ItemProcessor : IItemProcessor
     {
         private readonly IList<IItem> _itemsToProcess;
