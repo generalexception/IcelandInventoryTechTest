@@ -9,9 +9,9 @@ namespace Inventory.Core
         /// <summary>
         /// The items to process.
         /// </summary>
-        private readonly IList<Item> _itemsToProcess;
+        private readonly IEnumerable<IItem> _itemsToProcess;
 
-        public ItemProcessor(IList<Item> ItemsToProcess)
+        public ItemProcessor(IEnumerable<IItem> ItemsToProcess)
         {
             _itemsToProcess = ItemsToProcess;
         }

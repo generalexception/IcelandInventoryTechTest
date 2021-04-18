@@ -17,7 +17,7 @@ namespace Inventory.Core
         /// <summary>
         /// Specifies a list of rules to apply to the item when processed.
         /// </summary>
-        public IList<DegredationRule> DegredationRules { get; set; }
+        public IList<IDegredationRule> DegredationRules { get; set; }
 
         /// <summary>
         /// Specified if the items SellIn value gets reduced or not when processed.

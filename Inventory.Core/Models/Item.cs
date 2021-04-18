@@ -7,14 +7,14 @@ namespace Inventory.Core
     {
         public Item()
         {
-            DegredationRules = new List<DegredationRule>();
+            DegredationRules = new List<IDegredationRule>();
         }
 
         public int SellIn { get; set; }
         public int Quality { get; set; }
 
         [JsonPropertyName("Rules")]
-        public IList<DegredationRule> DegredationRules { get; set; }
+        public IList<IDegredationRule> DegredationRules { get; set; }
         public bool NeverExpires { get; set; }
         public string Name { get; set; }
     }

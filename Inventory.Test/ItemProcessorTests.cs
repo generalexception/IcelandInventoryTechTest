@@ -7,7 +7,7 @@ namespace Inventory.Test
     public class ItemProcessorTests
     {
         private IItemProcessor itemProcessor;
-        private readonly Item itemUnderTest;
+        private readonly IItem itemUnderTest;
 
         public ItemProcessorTests()
         {
@@ -22,7 +22,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 2;
             itemUnderTest.SellIn = 3;
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(1, itemUnderTest.Quality);
@@ -37,7 +37,7 @@ namespace Inventory.Test
             itemUnderTest.SellIn = -1;
             itemUnderTest.Quality = 10;
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(8, itemUnderTest.Quality);
@@ -52,7 +52,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 0;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(0, itemUnderTest.Quality);
@@ -67,7 +67,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 55;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(50, itemUnderTest.Quality);
@@ -82,7 +82,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 10;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(12, itemUnderTest.Quality);
@@ -98,7 +98,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 10;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(6, itemUnderTest.Quality);
@@ -113,7 +113,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 48;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(48, itemUnderTest.Quality);
@@ -127,7 +127,7 @@ namespace Inventory.Test
             itemUnderTest.SellIn = 4;
             itemUnderTest.NeverExpires = true;
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(4, itemUnderTest.SellIn);
@@ -163,7 +163,7 @@ namespace Inventory.Test
             };
             itemUnderTest.DegredationRules.Add(rule3);
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(6, itemUnderTest.Quality);
@@ -198,7 +198,7 @@ namespace Inventory.Test
             };
             itemUnderTest.DegredationRules.Add(rule3);
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(7, itemUnderTest.Quality);
@@ -233,7 +233,7 @@ namespace Inventory.Test
             };
             itemUnderTest.DegredationRules.Add(rule3);
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(0, itemUnderTest.Quality);
@@ -247,7 +247,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 5;
             itemUnderTest.SellIn = -1;
 
-            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(1, itemUnderTest.Quality);
