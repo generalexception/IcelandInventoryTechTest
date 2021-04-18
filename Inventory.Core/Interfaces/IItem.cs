@@ -23,5 +23,10 @@ namespace Inventory.Core
         /// Specified if the items SellIn value gets reduced or not when processed.
         /// </summary>
         public bool NeverExpires { get; set; }
+
+        /// <summary>
+        /// The name of the Item e.g. "Aged Brie"
+        /// </summary>
+        public string Name { get; set; }
     }
 }

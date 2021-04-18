@@ -27,5 +27,6 @@ namespace Inventory.Core
 
         public IList<IDegredationRule> DegredationRules { get; set; }
         public bool NeverExpires { get; set; }
+        public string Name { get; set; }
     }
 }
