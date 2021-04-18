@@ -6,9 +6,9 @@ namespace Inventory.Core
 {
     public class ItemProcessor : IItemProcessor
     {
-        private readonly IList<IItem> _itemsToProcess;
+        private readonly IList<Item> _itemsToProcess;
 
-        public ItemProcessor(IList<IItem> ItemsToProcess)
+        public ItemProcessor(IList<Item> ItemsToProcess)
         {
             _itemsToProcess = ItemsToProcess;
         }
@@ -19,7 +19,7 @@ namespace Inventory.Core
             {
                 if (item.DegredationRules.Count == 0)
                 {
-                    DecrementQuality(item);
+                    continue;
                 }
 
                 else
@@ -44,7 +44,8 @@ namespace Inventory.Core
         {
             if (rule.DegredationType == DegredationType.Absolute)
                 item.Quality = rule.DegredationValue;
-            item.Quality -= rule.DegredationValue;
+
+            DecrementQuality(item, rule.DegredationValue);
         }
 
         /// <summary>
@@ -62,15 +63,14 @@ namespace Inventory.Core
         /// Reduces the quality of the item by 1, or 2 if past sell by date.
         /// </summary>
         /// <param name="item">The item to adjust the quality on.</param>
-        private void DecrementQuality(IItem item)
+        private void DecrementQuality(IItem item, int value)
         {
             if (item.SellIn < 0)
             {
-                item.Quality -= 2;
+                item.Quality -= value * 2;
                 return;
             }
-
-            item.Quality--;
+            item.Quality -= value;
         }
     }
 }

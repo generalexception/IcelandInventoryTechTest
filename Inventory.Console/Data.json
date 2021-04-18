@@ -1,0 +1,106 @@
+﻿[
+  {
+    "Name": "Aged Brie",
+    "SellIn": 1,
+    "Quality": 1,
+    "Rules": [
+      {
+        "DegredationValue": -1
+      }
+    ]
+  },
+  {
+    "Name": "Christmas Crackers",
+    "SellIn": -1,
+    "Quality": 2,
+    "Rules": [
+      {
+        "DegredationValue": -2,
+        "SellInThreshold": 10
+      },
+      {
+        "DegredationValue": -3,
+        "SellInThreshold": 5
+      },
+      {
+        "DegredationValue": 0,
+        "DegredationType": 1
+      }
+    ]
+  },
+  {
+    "Name": "Christmas Crackers",
+    "SellIn": 9,
+    "Quality": 2,
+    "Rules": [
+      {
+        "DegredationValue": -2,
+        "SellInThreshold": 10
+      },
+      {
+        "DegredationValue": -3,
+        "SellInThreshold": 5
+      },
+      {
+        "DegredationValue": 0,
+        "DegredationType": 1
+      }
+    ]
+  },
+  {
+    "Name": "Soap",
+    "SellIn": 2,
+    "Quality": 2,
+    "NeverExpires": true,
+    "Rules": [
+      {
+        "DegredationValue": 0
+      }
+    ]
+  },
+  {
+    "Name": "Frozen Item",
+    "SellIn": -1,
+    "Quality": 55,
+    "Rules": [
+      {
+        "DegredationValue": 1
+      }
+    ]
+  },
+  {
+    "Name": "Frozen Item",
+    "SellIn": 2,
+    "Quality": 2,
+    "Rules": [
+      {
+        "DegredationValue": 1
+      }
+    ]
+  },
+  {
+    "Name": "INVALID ITEM",
+    "SellIn": 2,
+    "Quality": 2
+  },
+  {
+    "Name": "Fresh Item",
+    "SellIn": 2,
+    "Quality": 2,
+    "Rules": [
+      {
+        "DegredationValue": 2
+      }
+    ]
+  },
+  {
+    "Name": "Fresh Item",
+    "SellIn": -1,
+    "Quality": 5,
+    "Rules": [
+      {
+        "DegredationValue": 2
+      }
+    ]
+  }
+]

@@ -7,7 +7,7 @@ namespace Inventory.Test
     public class ItemProcessorTests
     {
         private IItemProcessor itemProcessor;
-        private readonly IItem itemUnderTest;
+        private readonly Item itemUnderTest;
 
         public ItemProcessorTests()
         {
@@ -18,10 +18,11 @@ namespace Inventory.Test
         [Fact]
         public void AtTheEndOfTheDay_SystemLowersBothValuesForItem()
         {
+            itemUnderTest.DegredationRules.Add(new DegredationRule { DegredationValue = 1 });
             itemUnderTest.Quality = 2;
             itemUnderTest.SellIn = 3;
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(1, itemUnderTest.Quality);
@@ -32,10 +33,11 @@ namespace Inventory.Test
         [Fact]
         public void OnceSellByDateIsLessThanZero_ThenQualityDegradesTwiceAsFast()
         {
+            itemUnderTest.DegredationRules.Add(new DegredationRule { DegredationValue = 1 });
             itemUnderTest.SellIn = -1;
             itemUnderTest.Quality = 10;
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(8, itemUnderTest.Quality);
@@ -46,10 +48,11 @@ namespace Inventory.Test
         [Fact]
         public void WhenQualityIsAtZero_AndQualityDecreased_ThenQualityRemainsAtZero()
         {
+            itemUnderTest.DegredationRules.Add(new DegredationRule { DegredationValue = 1 });
             itemUnderTest.Quality = 0;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(0, itemUnderTest.Quality);
@@ -61,10 +64,10 @@ namespace Inventory.Test
         public void WhenQualityIsAtFifty_AndQualityIncreased_ThenQualityRemainsAtFifty()
         {
             itemUnderTest.DegredationRules.Add(new DegredationRule { DegredationValue = -1 });
-            itemUnderTest.Quality = 50;
+            itemUnderTest.Quality = 55;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(50, itemUnderTest.Quality);
@@ -79,7 +82,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 10;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(12, itemUnderTest.Quality);
@@ -95,7 +98,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 10;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(6, itemUnderTest.Quality);
@@ -110,7 +113,7 @@ namespace Inventory.Test
             itemUnderTest.Quality = 48;
             itemUnderTest.SellIn = 9;
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(48, itemUnderTest.Quality);
@@ -124,7 +127,7 @@ namespace Inventory.Test
             itemUnderTest.SellIn = 4;
             itemUnderTest.NeverExpires = true;
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(4, itemUnderTest.SellIn);
@@ -160,7 +163,7 @@ namespace Inventory.Test
             };
             itemUnderTest.DegredationRules.Add(rule3);
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(6, itemUnderTest.Quality);
@@ -195,7 +198,7 @@ namespace Inventory.Test
             };
             itemUnderTest.DegredationRules.Add(rule3);
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(7, itemUnderTest.Quality);
@@ -230,10 +233,25 @@ namespace Inventory.Test
             };
             itemUnderTest.DegredationRules.Add(rule3);
 
-            itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(0, itemUnderTest.Quality);
+        }
+
+
+        [Fact]
+        public void WhenDegredationFactorIsPositive_AndOnceSellByDateIsLessThanZero_ThenQualityDecreasesByDegredationFactorAndTwiceAsFast()
+        {
+            itemUnderTest.DegredationRules.Add(new DegredationRule { DegredationValue = 2 });
+            itemUnderTest.Quality = 5;
+            itemUnderTest.SellIn = -1;
+
+            itemProcessor = new ItemProcessor(new List<Item>() { itemUnderTest });
+            itemProcessor.ProcessItems();
+
+            Assert.Equal(1, itemUnderTest.Quality);
+            Assert.Equal(-2, itemUnderTest.SellIn);
         }
     }
 }

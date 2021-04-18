@@ -2,7 +2,7 @@
 {
     public enum DegredationType
     {
-        Factor,
-        Absolute
+        Factor = 0,
+        Absolute = 1
     }
 }

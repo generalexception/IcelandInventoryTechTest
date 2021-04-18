@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Inventory.Core
 {
@@ -7,7 +8,7 @@ namespace Inventory.Core
         public int _quality;
         public Item()
         {
-            DegredationRules = new List<IDegredationRule>();
+            DegredationRules = new List<DegredationRule>();
         }
 
         public int SellIn { get; set; }
@@ -15,17 +16,18 @@ namespace Inventory.Core
         public int Quality {
             get
             {
+                if (_quality < 0) { return 0; }
+                if (_quality > 50) { return 50; }
                 return _quality;
             }
             set
             {
                 _quality = value;
-                if (value < 0) { _quality = 0; }
-                if (value > 50) { _quality = 50; }
             }
         }
 
-        public IList<IDegredationRule> DegredationRules { get; set; }
+        [JsonPropertyName("Rules")]
+        public IList<DegredationRule> DegredationRules { get; set; }
         public bool NeverExpires { get; set; }
         public string Name { get; set; }
     }
