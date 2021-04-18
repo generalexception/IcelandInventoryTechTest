@@ -19,7 +19,14 @@ namespace Inventory.Core
 
         public void ProcessItems()
         {
-            throw new NotImplementedException();
+            foreach (var item in _itemsToProcess)
+            {
+                if (item.DegredationRules.Count == 0)
+                {
+                    item.Quality--;
+                    item.SellIn--;
+                }
+            }
         }
     }
 }
