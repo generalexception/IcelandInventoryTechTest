@@ -38,22 +38,23 @@ Your task is to write a program which automates the inventory management based o
 >You should NOT use any executables (e.g. bat, class, cmd, exe, jar, jsp msi etc) in your submission. As well as satisfying the rules provided your solution should demonstrate how you would architect a solution to be maintainable, testable and in line with the SOLID principles.
 >We need to be able to build and run your program, therefore, please submit your code on github as a public repository and provide us a link to clone your repository. Your submission should contain the source code and clear instructions on how to build, test and run the program (preferably a Readme).
 
-Assumptions taken during this task:-
+## Assumptions taken during this task:-
 
 - Items would be fed to the system from some kind of database, modelled here by the Data.json file.
 - Some other process would invoke `ItemProcessor.ProcessItems()` on a nightly basis.
 - Not really sure how the "INVALID ITEM" fit's into the scope, as the SellIn and Quality values are within range. Maybe a database would be queried to return that items metadata such as how fast the quality drops etc.
 - I'm assuming that another business application knows the amount of days until Christmas and sets any Christmas items' SellIn value correctly.
 
-A bit about the approach I've taken:-
+## A bit about the approach I've taken:-
 
-From the specification above, we are dealing with processing a number of items. Each `Item` seem's to have it's own specific rules modelled here by a `DegredationRule`. The `IItemProcessor` looks at each items rule and applies it to the item when the `ProcessItems()` method is called. We assume this method would be invoked by some nightly job.
-Each `DegredationRule` has a `DegredationType` specifying if the Quality value should be decremented by a `Factor` or set to an `Absolute` value. This handles the scenario of Christmas Crackers dropping to 0 after christmas.
-A `DegredationRule` also has a `SellInThreshold` property which the `ItemProcessor` will only apply if the threshold has been reached.
+From the specification above, we are dealing with processing a number of items. Each `Item` seem's to have it's own specific rules modelled here by an `IDegredationRule`. The implementation of `IItemProcessor` looks at each implementation of `DegredationRule` and applies it to the `Item` when the `ProcessItems()` method is called. I am assuming this method would be invoked by some nightly job.
+Each `IDegredationRule` has a `DegredationType` enum specifying if the Quality value should be decremented by a `Factor` or set to an `Absolute` value. This handles the scenario of Christmas Crackers dropping to 0 after christmas.
+A `DegredationRule` also has a `SellInThreshold` property which the `IItemProcessor` implementation will only apply if the threshold has been reached.
 
-The soltuion is comprised of 3 projects:-
+### The soltuion is comprised of 3 projects:-
 - Inventory.Console - A console application which reads the input data from Data.json and produces the below output.
 - Inventory.Core - A class library which contains the core functionality of the project.
 - Inventory.Test - xUnit tests.
 
+### Output:-
 ![Example output](output.png)
