@@ -40,6 +40,7 @@ namespace Inventory.Test
             itemProcessor.ProcessItems();
 
             Assert.Equal(8, itemUnderTest.Quality);
+            Assert.Equal(-2, itemUnderTest.SellIn);
         }
 
         // The Quality of an item is never negative
@@ -47,23 +48,28 @@ namespace Inventory.Test
         public void WhenQualityIsAtZero_AndQualityDecreased_ThenQualityRemainsAtZero()
         {
             itemUnderTest.Quality = 0;
+            itemUnderTest.SellIn = 9;
 
             itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(0, itemUnderTest.Quality);
+            Assert.Equal(8, itemUnderTest.SellIn);
         }
 
         // The Quality of an item is never more than 50
         [Fact]
         public void WhenQualityIsAtFifty_AndQualityIncreased_ThenQualityRemainsAtFifty()
         {
+            itemUnderTest.DegredationRules.Add(new DegredationRule { DegredationValue = -1 });
             itemUnderTest.Quality = 50;
+            itemUnderTest.SellIn = 9;
 
             itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(50, itemUnderTest.Quality);
+            Assert.Equal(8, itemUnderTest.SellIn);
         }
 
         // "Aged Brie" increases in Quality the older it gets
@@ -72,11 +78,13 @@ namespace Inventory.Test
         {
             itemUnderTest.DegredationRules.Add(new DegredationRule { DegredationValue = -2 });
             itemUnderTest.Quality = 10;
+            itemUnderTest.SellIn = 9;
 
             itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(12, itemUnderTest.Quality);
+            Assert.Equal(8, itemUnderTest.SellIn);
         }
 
         // “Frozen Item” decreases in Quality by 1
@@ -86,11 +94,13 @@ namespace Inventory.Test
         {
             itemUnderTest.DegredationRules.Add(new DegredationRule { DegredationValue = 4 });
             itemUnderTest.Quality = 10;
+            itemUnderTest.SellIn = 9;
 
             itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(6, itemUnderTest.Quality);
+            Assert.Equal(8, itemUnderTest.SellIn);
         }
 
         // "Soap" never decreases in Quality
@@ -99,11 +109,13 @@ namespace Inventory.Test
         {
             itemUnderTest.DegredationRules.Add(new DegredationRule { DegredationValue = 0 });
             itemUnderTest.Quality = 48;
+            itemUnderTest.SellIn = 9;
 
             itemProcessor = new ItemProcessor(new List<IItem>() { itemUnderTest });
             itemProcessor.ProcessItems();
 
             Assert.Equal(48, itemUnderTest.Quality);
+            Assert.Equal(8, itemUnderTest.SellIn);
         }
 
         // "Soap" never has to be sold
